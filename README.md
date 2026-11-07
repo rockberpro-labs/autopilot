@@ -45,7 +45,16 @@ The repo is also a Claude Code plugin. Install it, then describe what you want a
 /autopilot:run --max-steps 1
 ```
 
-`/autopilot:plan` reads the repo, writes a `PLAN.md` in the grammar below and validates it with `autopilot status`. If a plan with progress or content already exists, it asks before replacing or appending. It never commits or runs the plan.
+`/autopilot:plan` accepts a description, or an existing plan to convert into the grammar below (for example one drafted in Claude plan mode or by another plugin):
+
+```
+/autopilot:plan add a --json flag to the status command    # describe
+/autopilot:plan ~/.claude/plans/foo.md                     # convert a file
+/autopilot:plan <pasted plan text>                         # convert pasted text
+/autopilot:plan                                            # convert the plan drafted earlier in the conversation
+```
+
+It reads the repo, writes a `PLAN.md` in the grammar below and validates it with `autopilot status`. It states which mode it picked before writing. If a plan with progress or content already exists, it asks before replacing or appending. It never commits or runs the plan.
 
 `/autopilot:run [flags]` wraps `autopilot run`: it checks the plan and the clean tree, shows a dry run, asks for confirmation, then runs in the background and reports the exit code. It adds no runner logic; the CLI stays the authority over progress.
 

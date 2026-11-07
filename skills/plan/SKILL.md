@@ -1,21 +1,32 @@
 ---
 name: plan
-description: Generate an autopilot PLAN.md from a description. Use when the user wants to write, create or draft a plan for the autopilot runner from a feature or task description.
-argument-hint: <description of what to build>
+description: Generate an autopilot PLAN.md from a description, or convert an existing plan (a file path, pasted text, or one drafted earlier in the conversation). Use when the user wants to write, create, draft or convert a plan for the autopilot runner.
+argument-hint: <what to build | path to an existing plan | pasted plan>
 ---
 
 # autopilot plan
 
-Turn the user's description into a `PLAN.md` that `autopilot run` can execute: small ordered steps, each done in its own fresh session.
+Turn the user's input into a `PLAN.md` that `autopilot run` can execute: small ordered steps, each done in its own fresh session.
 
-Description: $ARGUMENTS
+Input: $ARGUMENTS
 
-If the description is empty, ask the user what they want to build and stop.
+## Pick the mode
+
+Decide what the input is, and say which mode you picked in your first line ("Converting <source>" or "Planning from your description") so a wrong guess is visible before anything is written.
+
+- **Convert, file**: the input is a single token (or `--from <path>`) that resolves to an existing file, e.g. `~/.claude/plans/foo.md`. Read it and treat it as the source plan.
+- **Convert, pasted**: the input is long or multi-line and already looks like a plan (headings, checklists, numbered steps). Treat it as the source plan.
+- **Convert, conversation**: the input is empty and a plan was drafted earlier in this conversation (plan mode or another skill). Convert that one.
+- **Describe**: anything else is a description of what to build. Plan it from scratch.
+
+If the input is empty and there is no plan in the conversation, ask the user what they want to build and stop.
+
+When converting: keep the source's order, intent and content; add IDs, `Details:`, `Acceptance:` and `Verify:`; split items too big for one session; flag gaps you cannot fill from the source instead of inventing scope.
 
 ## Procedure
 
 1. **Look at the repo first**: README, package/build files, the test command, `verify` in `.autopilot.json` (if present), `git log --oneline -n 10`, and the files the description touches. Ask the user a question only when the goal cannot be settled from the description plus the code.
-2. **Check for an existing plan** (`PLAN.md`, or the path in `.autopilot.json`). If it has `[x]` or `[!]` steps or real content beyond the template, do not overwrite it silently. Show the new plan and ask whether to replace it, append new pending steps (continuing the ID numbers), or write it to another path.
+2. **Check for an existing plan** (`PLAN.md`, or the path in `.autopilot.json`). If it has `[x]` or `[!]` steps or real content beyond the template, do not overwrite it silently. Show the new plan and ask whether to replace it, append new pending steps (continuing the ID numbers), or write it to another path. This guard is about the target file, not the source: if the source plan *is* the target `PLAN.md`, converting it in place counts as a replace and needs confirmation too.
 3. **Write the plan** following the grammar below.
 4. **Validate** with `autopilot status` (or `npx autopilot status` / `bunx autopilot status` if it is not installed). Exit code 2 means the plan is invalid: fix it and run again.
 5. **Stop.** Do not commit and do not run `autopilot run`. Tell the user to review the plan, commit it (run requires a clean tree), then try `autopilot run --dry-run`.
