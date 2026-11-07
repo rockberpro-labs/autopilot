@@ -28,7 +28,7 @@ When converting: keep the source's order, intent and content; add IDs, `Details:
 1. **Look at the repo first**: README, package/build files, the test command, `verify` in `.autopilot.json` (if present), `git log --oneline -n 10`, and the files the description touches. Ask the user a question only when the goal cannot be settled from the description plus the code.
 2. **Check for an existing plan** (`PLAN.md`, or the path in `.autopilot.json`). If it has `[x]` or `[!]` steps or real content beyond the template, do not overwrite it silently. Show the new plan and ask whether to replace it, append new pending steps (continuing the ID numbers), or write it to another path. This guard is about the target file, not the source: if the source plan *is* the target `PLAN.md`, converting it in place counts as a replace and needs confirmation too.
 3. **Write the plan** following the grammar below.
-4. **Validate** with `autopilot status` (or `npx autopilot status` / `bunx autopilot status` if it is not installed). Exit code 2 means the plan is invalid: fix it and run again.
+4. **Validate** with `autopilot status` (or `npx @rockberpro-labs/autopilot status` / `bunx @rockberpro-labs/autopilot status` if it is not installed). Exit code 2 means the plan is invalid: fix it and run again.
 5. **Stop.** Do not commit and do not run `autopilot run`. Tell the user to review the plan, commit it (run requires a clean tree), then try `autopilot run --dry-run`.
 
 ## Grammar
