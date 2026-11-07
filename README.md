@@ -34,17 +34,20 @@ autopilot run
 
 `init` never overwrites existing files and reports what it skipped.
 
-## Generating a plan
+## Claude Code plugin
 
-The repo is also a Claude Code plugin. Install it, then describe what you want:
+The repo is also a Claude Code plugin. Install it, then describe what you want and run it:
 
 ```
 /plugin marketplace add rockberpro-labs/autopilot
 /plugin install autopilot@autopilot
 /autopilot:plan add a --json flag to the status command
+/autopilot:run --max-steps 1
 ```
 
-The skill reads the repo, writes a `PLAN.md` in the grammar below and validates it with `autopilot status`. If a plan with progress or content already exists, it asks before replacing or appending. It never commits or runs the plan.
+`/autopilot:plan` reads the repo, writes a `PLAN.md` in the grammar below and validates it with `autopilot status`. If a plan with progress or content already exists, it asks before replacing or appending. It never commits or runs the plan.
+
+`/autopilot:run [flags]` wraps `autopilot run`: it checks the plan and the clean tree, shows a dry run, asks for confirmation, then runs in the background and reports the exit code. It adds no runner logic; the CLI stays the authority over progress.
 
 ## Plan grammar
 

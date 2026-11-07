@@ -6,7 +6,7 @@
     {
       "name": "autopilot",
       "source": "./",
-      "description": "/autopilot:plan turns a description into a valid PLAN.md for the autopilot CLI."
+      "description": "/autopilot:plan turns a description into a valid PLAN.md; /autopilot:run executes it with the autopilot CLI."
     }
   ]
 }
