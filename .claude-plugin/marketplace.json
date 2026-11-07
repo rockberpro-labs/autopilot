@@ -1,0 +1,12 @@
+{
+  "name": "autopilot",
+  "description": "Plan generation for the autopilot runner.",
+  "owner": { "name": "Samuel O. Rockenbach" },
+  "plugins": [
+    {
+      "name": "autopilot",
+      "source": "./",
+      "description": "/autopilot:plan turns a description into a valid PLAN.md for the autopilot CLI."
+    }
+  ]
+}

@@ -22,7 +22,7 @@ Distribution: an npm package with a `bin` entry, runnable as `bunx autopilot` in
 ### Non-goals (v1)
 
 - Parallel step execution.
-- Writing or refining the plan itself. The plan is an input.
+- Writing the plan inside the runner. The runner treats the plan as an input; generating one from a description is done by the `/autopilot:plan` skill of the Claude Code plugin (`skills/plan/SKILL.md`).
 - A UI beyond terminal output.
 - Remote execution or CI integration (it should work in CI, but no special support).
 
