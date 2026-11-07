@@ -20,7 +20,11 @@ export class CliBackend implements Backend {
     if (input.disallowedTools?.length) args.push("--disallowedTools", input.disallowedTools.join(","));
     if (input.model) args.push("--model", input.model);
 
-    const proc = spawn("claude", args, { cwd: input.cwd, stdio: ["pipe", "pipe", "pipe"] });
+    const proc = spawn("claude", args, {
+      cwd: input.cwd,
+      stdio: ["pipe", "pipe", "pipe"],
+      env: { ...process.env, AUTOPILOT_STEP: "1" }, // lets project hooks skip themselves in runner sessions
+    });
 
     let spawnError: Error | undefined;
     proc.on("error", (e) => (spawnError = e));

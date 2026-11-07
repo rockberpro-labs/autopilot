@@ -12,6 +12,8 @@ export class SdkBackend implements Backend {
       prompt: input.prompt,
       options: {
         cwd: input.cwd,
+        // lets project hooks recognise a runner-driven session and skip themselves
+        env: { ...process.env, AUTOPILOT_STEP: "1" },
         allowedTools: input.allowedTools,
         disallowedTools: input.disallowedTools,
         permissionMode: input.permissionMode as PermissionMode,

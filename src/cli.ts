@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import { parseArgs } from "node:util";
 import { CliBackend } from "./backends/cli.ts";
-import { SdkBackend } from "./backends/sdk.ts";
 import { runInit } from "./commands/init.ts";
 import { EXIT, runPlan } from "./commands/run.ts";
 import { runStatus } from "./commands/status.ts";
@@ -93,7 +92,7 @@ async function main(): Promise<number> {
     const ac = new AbortController();
     process.on("SIGINT", () => ac.abort());
     process.on("SIGTERM", () => ac.abort());
-    const backend = opts.backend === "cli" ? new CliBackend() : new SdkBackend();
+    const backend = opts.backend === "cli" ? new CliBackend() : new (await import("./backends/sdk.ts")).SdkBackend();
     return await runPlan(opts, { backend, signal: ac.signal, cwd, out });
   } catch (e) {
     out(`error: ${(e as Error).message}`);
