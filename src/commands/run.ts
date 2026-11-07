@@ -69,7 +69,7 @@ export async function runPlan(opts: RunOptions, deps: RunDeps): Promise<number> 
     const verifyCmd = step.verify ?? opts.verify;
     out(`Next step: ${step.id} ${step.title}`);
     out("--- prompt ---");
-    out(buildPrompt({ step, verifyCmd, handoffTail: opts.handoffTail }));
+    out(buildPrompt({ step, verifyCmd, handoffTail: opts.handoffTail, planPath: opts.plan, handoffPath: opts.handoff }));
     return EXIT.OK;
   }
 
@@ -156,7 +156,7 @@ export async function runPlan(opts: RunOptions, deps: RunDeps): Promise<number> 
       attempts = attempt;
       rmSync(resultPath, { force: true });
       mkdirSync(stateDir, { recursive: true });
-      const prompt = buildPrompt({ step, verifyCmd, handoffTail: opts.handoffTail, previousFailure: failure?.text });
+      const prompt = buildPrompt({ step, verifyCmd, handoffTail: opts.handoffTail, planPath: opts.plan, handoffPath: opts.handoff, previousFailure: failure?.text });
       if (attempt > 1) out(`  retry ${attempt - 1}/${opts.retries} (fresh session)`);
 
       let r;

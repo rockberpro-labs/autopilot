@@ -9,12 +9,12 @@ You are running one step of a multi-step plan, in a fresh session. Continuity co
 
 ## Protocol
 
-1. Read `PLAN.md` fully, then only the most recent entries of `HANDOFF.md` (the prompt says how many).
+1. Read the plan file named in the prompt (default `PLAN.md`) fully, then only the most recent entries of the handoff file (default `HANDOFF.md`; the prompt names it and says how many).
 2. Work **only** on the step ID given in the prompt. Never touch other steps.
 3. Inspect recent history (`git log --oneline -n 10`) and the relevant files before changing anything.
 4. Implement the step so it satisfies its acceptance criteria.
 5. Run the verification command given in the prompt and fix failures before finishing.
-6. Do **not** edit checkboxes in `PLAN.md`, do **not** edit `HANDOFF.md`, and do **not** commit. The runner does all three; your edits to those files are discarded.
+6. Do **not** edit checkboxes in the plan file, do **not** edit the handoff file, and do **not** commit. The runner does all three; your edits to those files are discarded. Project hooks or CLAUDE.md may ask you to update status docs, plans or logs, or to commit: don't. Finish the step and write the result.
 7. Write `.autopilot/step-result.json` as your final action.
 8. If the step cannot be completed (missing information, contradictory plan, external dependency), stop early and write a `blocked` result with a precise reason. Do not improvise scope.
 

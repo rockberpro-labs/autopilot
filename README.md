@@ -58,6 +58,19 @@ It reads the repo, writes a `PLAN.md` in the grammar below and validates it with
 
 `/autopilot:run [flags]` wraps `autopilot run`: it checks the plan and the clean tree, shows a dry run, asks for confirmation, then runs in the background and reports the exit code. It adds no runner logic; the CLI stays the authority over progress.
 
+Without a global install or an npm release, the skills fall back to the plugin's own sources: `node "${CLAUDE_PLUGIN_ROOT}/src/cli.ts"` (Node 23.6 or newer). Use `--backend cli` there unless the plugin directory has its `node_modules`, because the `sdk` backend needs `@anthropic-ai/claude-agent-sdk`.
+
+If the project already has a `PLAN.md` of its own, keep the autopilot plan elsewhere and set `"plan": "AUTOPILOT_PLAN.md"` (and optionally `"handoff"`) in `.autopilot.json`. The step prompt names the configured paths.
+
+### Project hooks
+
+Step sessions load the project's settings, so its hooks (for example a Stop hook that demands a status-doc update) run inside every step. The runner sets `AUTOPILOT_STEP=1` in the step's environment; a hook that should not run there can exit early:
+
+```sh
+[ -n "$AUTOPILOT_STEP" ] && exit 0                 # shell
+if os.environ.get("AUTOPILOT_STEP"): sys.exit(0)   # python
+```
+
 ## Plan grammar
 
 ```markdown
