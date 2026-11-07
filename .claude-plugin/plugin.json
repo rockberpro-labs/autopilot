@@ -2,7 +2,7 @@
   "name": "autopilot",
   "version": "0.1.0",
   "license": "MIT",
-  "description": "Generate an autopilot PLAN.md from a description with /autopilot:plan; the autopilot CLI then runs it one fresh Claude Code session per step.",
+  "description": "Generate an autopilot PLAN.md from a description with /autopilot:plan, and run it with /autopilot:run, one fresh Claude Code session per step.",
   "author": { "name": "Samuel O. Rockenbach" },
   "repository": "https://github.com/rockberpro-labs/autopilot",
   "keywords": ["plan", "autopilot", "agents", "workflow"]
