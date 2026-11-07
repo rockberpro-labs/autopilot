@@ -43,6 +43,6 @@ export function runInit(cwd: string, out: (line: string) => void): number {
     out(`${existing ? "updated " : "created "} .gitignore (.autopilot/)`);
   }
 
-  out("\nNext: edit PLAN.md, commit the scaffolded files (run requires a clean tree), then `autopilot run`.");
+  out("\nNext: edit PLAN.md (or generate it with /autopilot:plan <description>), commit the scaffolded files (run requires a clean tree), then `autopilot run`.");
   return 0;
 }

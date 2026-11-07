@@ -9,6 +9,8 @@
   "files": [
     "dist",
     "templates",
+    ".claude-plugin",
+    "skills",
     "README.md"
   ],
   "scripts": {

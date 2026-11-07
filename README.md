@@ -25,7 +25,7 @@ The `sdk` backend uses `@anthropic-ai/claude-agent-sdk`; the `cli` backend needs
 
 ```sh
 autopilot init                  # PLAN.md, HANDOFF.md, skill, .autopilot.json, .gitignore entry
-$EDITOR PLAN.md
+$EDITOR PLAN.md                 # or generate it: /autopilot:plan <description> (see below)
 git add -A && git commit -m "autopilot scaffold"   # run requires a clean tree
 autopilot status
 autopilot run --dry-run         # shows the next step and the exact prompt
@@ -33,6 +33,18 @@ autopilot run
 ```
 
 `init` never overwrites existing files and reports what it skipped.
+
+## Generating a plan
+
+The repo is also a Claude Code plugin. Install it, then describe what you want:
+
+```
+/plugin marketplace add rockberpro-labs/autopilot
+/plugin install autopilot@autopilot
+/autopilot:plan add a --json flag to the status command
+```
+
+The skill reads the repo, writes a `PLAN.md` in the grammar below and validates it with `autopilot status`. If a plan with progress or content already exists, it asks before replacing or appending. It never commits or runs the plan.
 
 ## Plan grammar
 
