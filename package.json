@@ -1,5 +1,5 @@
 {
-  "name": "autopilot",
+  "name": "@rockberpro-labs/autopilot",
   "version": "0.1.0",
   "description": "Run a multi-step plan with Claude Code, one fresh session per step",
   "type": "module",
@@ -26,6 +26,9 @@
     "@types/bun": "latest",
     "@types/node": "^26.6.6",
     "typescript": "latest"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "engines": {
     "node": ">=20"

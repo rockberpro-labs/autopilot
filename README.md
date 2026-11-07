@@ -7,19 +7,19 @@ Runs a multi-step implementation plan with Claude Code, **one fresh session per 
 Requires Node.js 20 or newer and git. Bun is **not** required.
 
 ```sh
-npx autopilot init         # in a git repository
+npx @rockberpro-labs/autopilot init         # in a git repository
 ```
 
 Or install it globally:
 
 ```sh
-npm install -g autopilot
+npm install -g @rockberpro-labs/autopilot
 autopilot init
 ```
 
-Bun users can run it the same way: `bunx autopilot init`.
+Bun users can run it the same way: `bunx @rockberpro-labs/autopilot init`.
 
-The `sdk` backend uses `@anthropic-ai/claude-agent-sdk`; the `cli` backend needs `claude` on PATH. The examples below use the bare `autopilot` command; prefix it with `npx` (or `bunx`) if you did not install it globally.
+The `sdk` backend uses `@anthropic-ai/claude-agent-sdk`; the `cli` backend needs `claude` on PATH. The examples below use the bare `autopilot` command. If you did not install it globally, install it in the project (`npm i -D @rockberpro-labs/autopilot`) so `npx autopilot` resolves to it, or use the full `npx @rockberpro-labs/autopilot`. Without a local install, a bare `npx autopilot` fetches an unrelated package from npm.
 
 ## Quick start
 

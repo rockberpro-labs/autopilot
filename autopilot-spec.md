@@ -6,7 +6,7 @@
 
 The runner is the authority over progress. The agent implements a step and reports back; the runner verifies the result, updates the plan, records the handoff and commits.
 
-Distribution: an npm package with a `bin` entry, runnable as `bunx autopilot` in any repository.
+Distribution: an npm package with a `bin` entry, runnable as `bunx @rockberpro-labs/autopilot` in any repository.
 
 ## 2. Goals and non-goals
 
@@ -295,7 +295,7 @@ interface Backend {
 
 ## 14. Acceptance criteria
 
-1. `bunx autopilot init` in an empty git repo creates `PLAN.md`, `HANDOFF.md`, the skill, `.autopilot.json` and the `.gitignore` entry, without overwriting existing files (it reports what it skipped).
+1. `bunx @rockberpro-labs/autopilot init` in an empty git repo creates `PLAN.md`, `HANDOFF.md`, the skill, `.autopilot.json` and the `.gitignore` entry, without overwriting existing files (it reports what it skipped).
 2. `autopilot status` lists steps with their states and the next step.
 3. `autopilot run` on a 3-step plan with a passing verify command produces 3 commits, 3 handoff entries and all boxes checked, each step having run in its own session.
 4. A failing verify causes a retry in a fresh session with the failure output in the prompt; after retries are exhausted the step is marked `[!]`, the code changes are discarded, and the runner exits 1.

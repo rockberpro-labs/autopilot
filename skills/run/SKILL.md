@@ -12,7 +12,7 @@ Flags passed by the user: $ARGUMENTS
 
 ## Procedure
 
-1. **Resolve the command**: `autopilot` if it is on PATH, otherwise `npx autopilot` (or `bunx autopilot` in a Bun project).
+1. **Resolve the command**: `autopilot` if it is on PATH, otherwise `npx @rockberpro-labs/autopilot` (or `bunx @rockberpro-labs/autopilot` in a Bun project). Never use a bare `npx autopilot`: without a local install it fetches an unrelated npm package.
 2. **Preflight**, stopping at the first failure:
    - `autopilot status`: exit 2 means the plan is invalid. Show the errors and stop (offer `/autopilot:plan` or a manual fix).
    - `.claude/skills/autopilot-step/SKILL.md` must exist. If not, suggest `autopilot init` and stop.
