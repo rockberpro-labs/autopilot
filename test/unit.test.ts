@@ -79,6 +79,13 @@ describe("step result", () => {
 });
 
 describe("prompt", () => {
+  test("inlineProtocol embeds the step protocol instead of naming the skill", () => {
+    const p = buildPrompt({ step: { id: "S01", title: "t" }, handoffTail: 8, inlineProtocol: true });
+    expect(p).toContain("step-result.json");
+    expect(p).not.toContain("Use the autopilot-step skill");
+    expect(p).not.toContain("name: autopilot-step");
+  });
+
   test("matches the spec shape", () => {
     const p = buildPrompt({ step: { id: "S02", title: "Repo" }, verifyCmd: "bun test", handoffTail: 8 });
     expect(p).toBe(

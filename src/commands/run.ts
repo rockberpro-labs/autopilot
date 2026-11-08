@@ -30,6 +30,9 @@ export async function runPlan(opts: RunOptions, deps: RunDeps): Promise<number> 
   const planRel = relative(cwd, planPath);
   const handoffRel = relative(cwd, handoffPath);
 
+  // a project skill wins and stays the customization point; otherwise the protocol goes into the prompt
+  const inlineProtocol = !existsSync(join(cwd, ".claude/skills/autopilot-step/SKILL.md"));
+
   const readPlan = (): string | null => (existsSync(planPath) ? readFileSync(planPath, "utf8") : null);
 
   // ---- validate ----
@@ -69,7 +72,7 @@ export async function runPlan(opts: RunOptions, deps: RunDeps): Promise<number> 
     const verifyCmd = step.verify ?? opts.verify;
     out(`Next step: ${step.id} ${step.title}`);
     out("--- prompt ---");
-    out(buildPrompt({ step, verifyCmd, handoffTail: opts.handoffTail, planPath: opts.plan, handoffPath: opts.handoff }));
+    out(buildPrompt({ step, verifyCmd, handoffTail: opts.handoffTail, planPath: opts.plan, handoffPath: opts.handoff, inlineProtocol }));
     return EXIT.OK;
   }
 
@@ -156,7 +159,7 @@ export async function runPlan(opts: RunOptions, deps: RunDeps): Promise<number> 
       attempts = attempt;
       rmSync(resultPath, { force: true });
       mkdirSync(stateDir, { recursive: true });
-      const prompt = buildPrompt({ step, verifyCmd, handoffTail: opts.handoffTail, planPath: opts.plan, handoffPath: opts.handoff, previousFailure: failure?.text });
+      const prompt = buildPrompt({ step, verifyCmd, handoffTail: opts.handoffTail, planPath: opts.plan, handoffPath: opts.handoff, previousFailure: failure?.text, inlineProtocol });
       if (attempt > 1) out(`  retry ${attempt - 1}/${opts.retries} (fresh session)`);
 
       let r;

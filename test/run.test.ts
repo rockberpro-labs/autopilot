@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { Backend, StepRunInput, StepRunOutput } from "../src/backends/types.ts";
@@ -226,12 +226,22 @@ describe("run loop", () => {
     expect(readFileSync(join(dir, "mine.txt"), "utf8")).toBe("precious");
   });
 
+  test("dry-run refers to the project's autopilot-step skill when it exists", async () => {
+    mkdirSync(join(dir, ".claude/skills/autopilot-step"), { recursive: true });
+    writeFileSync(join(dir, ".claude/skills/autopilot-step/SKILL.md"), "mine");
+    const r = await run(new FakeBackend(good()), { dryRun: true });
+    expect(r.text).toContain("Use the autopilot-step skill.");
+    expect(r.text).not.toContain("Follow this protocol");
+  });
+
   test("dry-run prints step and prompt and changes nothing", async () => {
     const b = new FakeBackend(good());
     const before = sh(dir, "git rev-parse HEAD");
     const r = await run(b, { dryRun: true, verify: "bun test" });
     expect(r.code).toBe(0);
-    expect(r.text).toContain("Use the autopilot-step skill.");
+    expect(r.text).toContain("Follow this protocol for the step:");
+    expect(r.text).toContain("step-result.json");
+    expect(r.text).not.toContain("Use the autopilot-step skill.");
     expect(r.text).toContain("S01");
     expect(b.calls).toHaveLength(0);
     expect(sh(dir, "git rev-parse HEAD")).toBe(before);
