@@ -96,7 +96,7 @@ Context the agent reads every step.
 
 ## Skill protocol
 
-`init` scaffolds `.claude/skills/autopilot-step/SKILL.md`. For its single step the agent must: read `PLAN.md` and the last handoff entries; work only on the assigned step; inspect git history; implement; run the verification command; **not** edit checkboxes, `HANDOFF.md`, or commit; write `.autopilot/step-result.json` last; and write a `blocked` result with a precise reason rather than improvising.
+The step protocol lives in `templates/skills/autopilot-step/SKILL.md`. `init` scaffolds it to `.claude/skills/autopilot-step/SKILL.md` if you want to customize it; without that file the runner puts the same protocol in the step prompt, so `init` is optional. For its single step the agent must: read `PLAN.md` and the last handoff entries; work only on the assigned step; inspect git history; implement; run the verification command; **not** edit checkboxes, `HANDOFF.md`, or commit; write `.autopilot/step-result.json` last; and write a `blocked` result with a precise reason rather than improvising.
 
 ```ts
 type StepResult = {

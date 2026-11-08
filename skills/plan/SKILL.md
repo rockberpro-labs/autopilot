@@ -30,7 +30,7 @@ When converting: keep the source's order, intent and content; add IDs, `Details:
 3. **Write the plan** following the grammar below.
 4. **Point the runner at the plan.** If the plan is not going to `PLAN.md` (the project already owns that file), create or merge `.autopilot.json` with `"plan": "<path>"`, and `"handoff": "<path>"` if `HANDOFF.md` is taken too. Keep any other keys and say what you changed. See Config below.
 5. **Validate** with `autopilot status --plan <path>`. Resolve the command: `autopilot` on PATH, else `npx @rockberpro-labs/autopilot` / `bunx @rockberpro-labs/autopilot`, else `node "${CLAUDE_PLUGIN_ROOT}/src/cli.ts"` (Node 23.6+). Exit code 2 means the plan is invalid: fix it and run again. If no form of the CLI works, say the plan is unvalidated.
-6. **Stop.** Do not commit and do not run `autopilot run`. List the exact files to commit (the plan, `.autopilot.json` if written; `.claude/skills/autopilot-step/` appears after `autopilot init`), since run requires a clean tree. Then suggest `/autopilot:run --dry-run`.
+6. **Stop.** Do not commit and do not run `autopilot run`. List the exact files to commit (the plan, and `.autopilot.json` if written; `autopilot init` is optional, the runner supplies the step protocol itself), since run requires a clean tree. Then suggest `/autopilot:run --dry-run`.
 
 ## Config
 
